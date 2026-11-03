@@ -1,6 +1,758 @@
-<html>
-  <body>
-    <h1>Your Name</h1>
-    <p>Welcome to my website!</p>
-  </body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cesium OS | Independent Operating System</title>
+<meta name="description" content="Cesium is an independent x64 operating system project.">
+<style>
+:root {
+  --red: #d70a53;
+  --dark-red: #ad0843;
+  --black: #242424;
+  --gray: #555;
+  --light: #f5f5f5;
+  --border: #dedede;
+  --white: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--black);
+  background: white;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+  width: min(1100px, 92%);
+  margin: auto;
+}
+
+/* NAVIGATION */
+
+.topbar {
+  background: #292929;
+  color: white;
+  font-size: 12px;
+  padding: 8px 0;
+}
+
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.topbar a { color: #ddd; }
+.topbar a:hover { color: white; }
+
+header {
+  border-bottom: 1px solid var(--border);
+  background: white;
+}
+
+.nav {
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.logo-symbol {
+  width: 48px;
+  height: 48px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  font-family: Georgia, serif;
+  transform: rotate(-15deg);
+}
+
+.logo-name {
+  font-size: 29px;
+  font-weight: bold;
+  letter-spacing: -1.5px;
+}
+
+.logo-name span { color: var(--red); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 14px;
+}
+
+.nav-links a:hover { color: var(--red); }
+
+.nav-links .github {
+  background: var(--red);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 4px;
+}
+
+.nav-links .github:hover {
+  background: var(--dark-red);
+}
+
+.menu {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* HERO */
+
+.hero {
+  background: var(--red);
+  color: white;
+  padding: 95px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  content: "C";
+  position: absolute;
+  right: 8%;
+  top: -110px;
+  font-family: Georgia, serif;
+  font-size: 500px;
+  font-weight: bold;
+  color: rgba(255,255,255,.055);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.hero-label {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 22px;
+  color: #ffe0eb;
+}
+
+.hero h1 {
+  font-size: clamp(43px, 7vw, 75px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  margin-bottom: 25px;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 600px;
+  color: #ffe8f0;
+  line-height: 1.8;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-top: 35px;
+}
+
+.button {
+  padding: 13px 23px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: .2s;
+  display: inline-block;
+}
+
+.button-white {
+  background: white;
+  color: var(--red);
+}
+
+.button-white:hover {
+  background: #f1f1f1;
+  transform: translateY(-2px);
+}
+
+.button-outline {
+  border: 1px solid rgba(255,255,255,.7);
+  color: white;
+}
+
+.button-outline:hover {
+  background: rgba(255,255,255,.12);
+}
+
+/* SECTIONS */
+
+section.content {
+  padding: 75px 0;
+}
+
+.section-heading {
+  font-size: 32px;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.section-description {
+  color: var(--gray);
+  max-width: 700px;
+  font-size: 15px;
+  margin-bottom: 38px;
+}
+
+.red-line {
+  height: 4px;
+  width: 55px;
+  background: var(--red);
+  margin-bottom: 22px;
+}
+
+/* ABOUT */
+
+.about {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-text p {
+  color: var(--gray);
+  font-size: 15px;
+  margin-bottom: 17px;
+}
+
+.info-box {
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--red);
+  padding: 25px;
+}
+
+.info-box h3 {
+  font-size: 19px;
+  margin-bottom: 17px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.info-row:last-child { border: none; }
+
+.info-row span:first-child { color: var(--gray); }
+.info-row span:last-child { font-weight: bold; }
+
+/* FEATURES */
+
+.features-section {
+  background: var(--light);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 27px;
+  transition: .2s;
+}
+
+.feature:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  width: 42px;
+  height: 42px;
+  background: #fff0f5;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.feature h3 {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+/* ARCHITECTURE */
+
+.architecture {
+  border: 1px solid var(--border);
+  padding: 30px;
+  background: white;
+}
+
+.architecture-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 650px;
+  margin: auto;
+}
+
+.architecture-block {
+  padding: 19px;
+  text-align: center;
+  border: 1px solid var(--red);
+  background: #fff7fa;
+}
+
+.architecture-block strong {
+  display: block;
+  color: var(--red);
+  font-size: 16px;
+}
+
+.architecture-block small {
+  color: var(--gray);
+}
+
+.architecture-arrow {
+  text-align: center;
+  color: var(--red);
+  font-size: 22px;
+}
+
+/* ROADMAP */
+
+.roadmap-section {
+  background: var(--light);
+  border-top: 1px solid var(--border);
+}
+
+.roadmap {
+  border-left: 3px solid var(--red);
+  margin-left: 8px;
+}
+
+.roadmap-item {
+  padding: 0 0 35px 28px;
+  position: relative;
+}
+
+.roadmap-item::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 3px solid white;
+}
+
+.roadmap-item h3 { font-size: 17px; }
+
+.roadmap-item p {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  background: #ffe5ee;
+  color: var(--dark-red);
+  padding: 4px 9px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* GITHUB */
+
+.github-section {
+  background: #292929;
+  color: white;
+  text-align: center;
+  padding: 75px 20px;
+}
+
+.github-section h2 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.github-section p {
+  color: #ccc;
+  margin-bottom: 25px;
+}
+
+/* FOOTER */
+
+footer {
+  background: #f1f1f1;
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+footer a { color: var(--red); }
+
+@media(max-width: 800px) {
+  .menu { display: block; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 126px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 25px 5%;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+
+  .nav-links.open { display: flex; }
+
+  .about { grid-template-columns: 1fr; gap: 30px; }
+  .features { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 75px 0; }
+}
+
+@media(max-width: 520px) {
+  .features { grid-template-columns: 1fr; }
+  .hero h1 { letter-spacing: -2px; }
+  .section-heading { font-size: 27px; }
+  .topbar-inner { justify-content: center; }
+  .topbar-inner span:last-child { display: none; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span>CESIUM — Independent Operating System</span>
+    <span><a href="https://github.com/jwalk117/cesium">Source Code ↗</a></span>
+  </div>
+</div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <div class="logo-symbol">C</div>
+      <div class="logo-name">cesium<span>.</span></div>
+    </a>
+
+    <button class="menu" id="menu" aria-label="Toggle menu">☰</button>
+
+    <nav class="nav-links" id="links">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="https://github.com/jwalk117/cesium" class="github">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-label">An independent operating system</div>
+    <h1>Introducing<br>Cesium.</h1>
+    <p>
+      A new approach to operating system development.
+      Built from the ground up with compatibility,
+      modularity, and customization in mind.
+    </p>
+    <div class="buttons">
+      <a href="https://github.com/jwalk117/cesium" class="button button-white">
+        Explore the source code →
+      </a>
+      <a href="#about" class="button button-outline">
+        Learn about Cesium
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="content" id="about">
+  <div class="container about">
+    <div class="about-text">
+      <div class="red-line"></div>
+      <h2 class="section-heading">What is Cesium?</h2>
+      <p>
+        Cesium is an independent operating system project
+        focused on building a new foundation for computing.
+      </p>
+      <p>
+        Developed from the ground up, Cesium aims to explore
+        the possibilities of operating system architecture,
+        kernel development, and system customization.
+      </p>
+      <p>
+        The goal is to create an adaptable operating system
+        with a strong emphasis on compatibility and modularity.
+      </p>
+      <a href="https://github.com/jwalk117/cesium"
+         style="color:var(--red);font-weight:bold;font-size:14px;">
+        View the project on GitHub →
+      </a>
+    </div>
+
+    <div class="info-box">
+      <h3>Project information</h3>
+      <div class="info-row">
+        <span>Project</span><span>Cesium</span>
+      </div>
+      <div class="info-row">
+        <span>Type</span><span>Operating System</span>
+      </div>
+      <div class="info-row">
+        <span>Architecture</span><span>x86_64</span>
+      </div>
+      <div class="info-row">
+        <span>Kernel</span><span>Custom</span>
+      </div>
+      <div class="info-row">
+        <span>Development</span><span>Active project</span>
+      </div>
+      <div class="info-row">
+        <span>Repository</span><span>GitHub</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content features-section" id="features">
+  <div class="container">
+    <div class="red-line"></div>
+    <h2 class="section-heading">The principles behind Cesium</h2>
+    <p class="section-description">
+      Cesium is built around several core ideas that
+      guide its development and long-term direction.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">⌘</div>
+        <h3>Modularity</h3>
+        <p>
+          A modular approach to system design,
+          allowing components to evolve independently.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">◈</div>
+        <h3>Compatibility</h3>
+        <p>
+          Compatibility is a central consideration
+          in the design and development of Cesium.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">⚙</div>
+        <h3>Customization</h3>
+        <p>
+          An adaptable foundation with room
+          for experimentation and customization.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">⌬</div>
+        <h3>Independent</h3>
+        <p>
+          Developed independently with its own
+          architecture and direction.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">▤</div>
+        <h3>Kernel focused</h3>
+        <p>
+          Development begins with the core
+          foundations of an operating system.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">∞</div>
+        <h3>Long-term vision</h3>
+        <p>
+          A project designed to grow through
+          continued research and development.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content" id="architecture">
+  <div class="container">
+    <div class="red-line"></div>
+    <h2 class="section-heading">System architecture</h2>
+    <p class="section-description">
+      An overview of the fundamental layers
+      behind the Cesium operating system.
+    </p>
+
+    <div class="architecture">
+      <div class="architecture-row">
+        <div class="architecture-block">
+          <strong>CESIUM OPERATING SYSTEM</strong>
+          <small>The overall system environment</small>
+        </div>
+        <div class="architecture-arrow">↓</div>
+        <div class="architecture-block">
+          <strong>KERNEL</strong>
+          <small>Core operating system functionality</small>
+        </div>
+        <div class="architecture-arrow">↓</div>
+        <div class="architecture-block">
+          <strong>HARDWARE</strong>
+          <small>x86_64 architecture</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content roadmap-section" id="roadmap">
+  <div class="container">
+    <div class="red-line"></div>
+    <h2 class="section-heading">Development</h2>
+    <p class="section-description">
+      The long-term direction of the Cesium project.
+    </p>
+
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <h3>Kernel development</h3>
+        <p>Building and expanding the core of Cesium.</p>
+        <span class="tag">CORE DEVELOPMENT</span>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>System architecture</h3>
+        <p>Developing the internal structure and modular design.</p>
+        <span class="tag">PLANNED</span>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>Compatibility</h3>
+        <p>Expanding the system's compatibility goals.</p>
+        <span class="tag">PLANNED</span>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>System expansion</h3>
+        <p>Growing the operating system and exploring new functionality.</p>
+        <span class="tag">FUTURE DEVELOPMENT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="github-section">
+  <h2>Explore Cesium.</h2>
+  <p>Follow development and explore the source code on GitHub.</p>
+  <a href="https://github.com/jwalk117/cesium"
+     class="button button-white">
+    Visit GitHub Repository →
+  </a>
+</section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <strong style="font-size:20px;color:#292929;">cesium<span style="color:var(--red)">.</span></strong>
+    <span>Independent operating system project.</span>
+    <a href="https://github.com/jwalk117/cesium">GitHub</a>
+    <span>© 2026 Cesium Project</span>
+  </div>
+</footer>
+
+<script>
+const menu = document.getElementById("menu");
+const links = document.getElementById("links");
+
+menu.addEventListener("click", () => {
+  links.classList.toggle("open");
+  menu.textContent = links.classList.contains("open") ? "×" : "☰";
+});
+
+links.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    links.classList.remove("open");
+    menu.textContent = "☰";
+  });
+});
+</script>
+
+</body>
 </html>
